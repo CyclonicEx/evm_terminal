@@ -36,7 +36,7 @@ def lista():
     miConn = Conn()
     
     try:
-        comando = "SELECT folio, razon, fechaProgramada, comentarios, tipo_mantenimiento, vehiculo, edo_mantenimiento FROM MANTENIMIENTO"
+        comando = "SELECT folio, razon, fechaProgramada, comentarios, tipoMantenimiento, vehiculo, estadoMantenimiento FROM MANTENIMIENTO"
         listado = miConn.lista(comando)
         lista = []
         for fila in listado:
