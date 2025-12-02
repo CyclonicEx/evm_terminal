@@ -69,7 +69,7 @@ def Create(newUser, newTipo, newTel, newTLic, newLic):
     print("     Numero de Empleado:", idEmpleado)
     newTel.set_empleado(idEmpleado)
     newLic.set_empleado(idEmpleado)
-    
+
     #INSERT telefono
     comando3 = """
     INSERT INTO telefono (numTelefono, empleado)
@@ -90,7 +90,7 @@ def Create(newUser, newTipo, newTel, newTLic, newLic):
         newTLic.get_codigoLic(),
         newTLic.get_descripcionLic()
     ))
-    
+
     idTipoLic = cursor.lastrowid
     newLic.set_tipoLicencia(idTipoLic)
     comando5 = """
