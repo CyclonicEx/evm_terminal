@@ -15,11 +15,8 @@ class Vehiculo:
         self.__utilidad = utilidad
         self.__comentarios = comentarios
         
-        
     def __str__(self):
-        return f"ID Vehiculo: {self.__id}  Num serie: {self.__num_serie}  Matricula: {self.__matricula}  Marca: {self.__marca}  Modelo: {self.__modelo}  Color: {self.__color}  Fecha Adquision: {self.__fecha_adquision}  Tipo de Vehiculo: {self.__tipo}  Tipo Licencia: {self.__tipo_licencia}  Capacidad Pasajeros: {self.__capacidad_pasajeros}  Utilidad: {self.__utilidad}  Comentarios: {self.__comentarios}"
-        
-
+        return f"ID Vehiculo: {self.__id}  Num serie: {self.__num_serie}  Matricula: {self.__matricula}  Marca: {self.__marca}  Modelo: {self.__modelo}  Color: {self.__color}  Fecha Adquision: {self.__fecha_adquision}  Tipo de Vehiculo: {self.__tipo}  Tipo Licencia: {self.__tipo_licencia}  Capacidad Pasajeros: {self.__capacidad_pasajeros}  Utilidad: {self.__utilidad}  Comentarios: {self.__comentarios}  Proposito: {self.__proposito}  Disponibilidad: {self.__disponibilidad}"
     #gets
     def get_id(self, ):
         return self.__id
