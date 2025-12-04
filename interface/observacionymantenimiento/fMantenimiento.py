@@ -25,11 +25,10 @@ def pedirDatos():
     fechaProgramada = val.vFecha("Fecha Programada")
     comentarios = val.Str("Comentarios generales")
     
-    estatus = "ABIERTO"
     estado_id = MAPA_ESTADO["PENDIENTE DE ASIGNACIÓN"]
     
     nuevoMantenimiento = Mantenimiento(
-        razon, estatus, importancia, fechaProgramada, comentarios,
+        razon, importancia, fechaProgramada, comentarios,
         tipo_id, vehiculo, estado_id
     )
     
@@ -50,7 +49,6 @@ def listaGeneral():
 
         print(f"Folio: {m.get_folio()}")
         print(f"Razón: {m.get_razon()}")
-        print(f"Estatus: {m.get_estatus()}")
         print(f"Importancia: {m.get_importancia()}")
         print(f"Fecha Programada: {m.get_fechaProgramada()}")
         print(f"Comentarios: {m.get_comentarios()}")
@@ -64,7 +62,7 @@ def listaGeneral():
 def actualizarMantenimiento():
     print(" ----- Actualizar Mantenimiento -----")
     folio = val.vInt("Folio del Mantenimiento a modificar")
-    tempM = Mantenimiento("", "", "", "", "", "", "", "", folio)
+    tempM = Mantenimiento("", "", "", "", "", "", "", folio)
     
     objM = crudMantenimiento.buscar(tempM)
     if not objM:
@@ -101,7 +99,7 @@ def actualizarMantenimiento():
 def borrarMantenimiento():
     print(" ----- Eliminar Mantenimiento -----")
     folio = val.vInt("Folio del Mantenimiento a eliminar")
-    tempM = Mantenimiento("", "", "", "", "", "", "", "", folio)
+    tempM = Mantenimiento("", "", "", "", "", "", "", folio)
     
     objM = crudMantenimiento.buscar(tempM)
     if not objM:
@@ -126,19 +124,29 @@ def pedirVehiculoValido():
         resultado = cursor.fetchone()
         if resultado:
             return vehiculo
-        print("❌ El número de serie NO existe, ingresa uno válido.\n")
+        print(" El número de serie NO existe, ingresa uno válido.\n")
+        input(" Presiona Enter para intentar de nuevo...")
 
 def menuMantenimientos():
     while True:
         print("\n--- MENÚ MANTENIMIENTO ---")
+        print("--------------------------------------------")
         print("1. Registrar Mantenimiento")
+        print("--------------------------------------------")
         print("2. Listar Mantenimientos")
+        print("--------------------------------------------")
         print("3. Actualizar Mantenimiento")
+        print("--------------------------------------------")
         print("4. Eliminar Mantenimiento")
+        print("--------------------------------------------")
         print("5. Reporte de Mantenimiento de un Vehículo")
+        print("--------------------------------------------")
         print("6. Estado de Mantenimientos de Vehículos")
+        print("--------------------------------------------")
         print("7. Historial de Mantenimientos y Observaciones")
+        print("--------------------------------------------")
         print("8. Regresar al menú principal")
+        print("--------------------------------------------")
 
         opcion = val.vInt("Selecciona una opción")
 
@@ -174,8 +182,8 @@ def reporteMantenimientoVehiculo():
         JOIN vehiculo v ON mt.vehiculo = v.numSerie
         JOIN marca ma ON v.marca = ma.codigo
         JOIN modelo mo ON v.modelo = mo.codigo
-        JOIN tipoMantenimiento tm ON mt.tipoMantenimiento = tm.numero
-        JOIN estadoMantenimiento em ON mt.estadoMantenimiento = em.numero
+        JOIN tipo_mantenimiento tm ON mt.tipoMantenimiento = tm.numero
+        JOIN edo_mantenimiento em ON mt.estadoMantenimiento = em.numero
         LEFT JOIN mantenimiento_bitacora mb ON mt.folio = mb.mantenimiento
         LEFT JOIN observacion o ON mb.bitacora = o.bitacora
         LEFT JOIN tipoObservacion tobs ON o.tipoObservacion = tobs.numero
@@ -204,8 +212,8 @@ def estadoMantenimientosVehiculos():
         JOIN vehiculo v ON mt.vehiculo = v.numSerie
         JOIN marca ma ON v.marca = ma.codigo
         JOIN modelo mo ON v.modelo = mo.codigo
-        JOIN tipoMantenimiento tm ON mt.tipoMantenimiento = tm.numero
-        JOIN estadoMantenimiento em ON mt.estadoMantenimiento = em.numero
+        JOIN tipo_mantenimiento tm ON mt.tipoMantenimiento = tm.numero
+        JOIN edo_mantenimiento em ON mt.estadoMantenimiento = em.numero
         ORDER BY mt.fechaProgramada DESC
     """)
     resultados = cursor.fetchall()
@@ -231,7 +239,7 @@ def historialMantenimientosObservaciones():
         JOIN vehiculo v ON mt.vehiculo = v.numSerie
         JOIN marca ma ON v.marca = ma.codigo
         JOIN modelo mo ON v.modelo = mo.codigo
-        JOIN tipoMantenimiento tm ON mt.tipoMantenimiento = tm.numero
+        JOIN tipo_mantenimiento tm ON mt.tipoMantenimiento = tm.numero
         LEFT JOIN mantenimiento_bitacora mb ON mt.folio = mb.mantenimiento
         LEFT JOIN observacion o ON mb.bitacora = o.bitacora
         LEFT JOIN tipoObservacion tobs ON o.tipoObservacion = tobs.numero

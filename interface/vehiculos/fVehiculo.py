@@ -30,13 +30,12 @@ def SolicitarDatos():
     print("|{:^63}|".format("AGREGAR VEHÍCULO"))
     print("+" + "-"*63 + "+")
 
-    
     numSerie = val.vNumSerie("Ingresa el numero de serie del vehiculo: ")
     matricula = val.vMatricula("Ingresa la matricula del vehiculo: ") 
     marca = val.vDatos("Ingresa el codigo de la marca del vehiculo: ") 
     modelo = val.vDatos("Ingresa el codigo del modelo del vehiculo: ") 
     fecha_adquision = val.vFecha()
-    tipo_licencia = val.vTipoLicencia("Ingresa el codigo del tipo de licencia requerida: ") 
+    tipo_licencia = val.vTipoLicencia("Ingresa el numero del tipo de licencia requerida: ") 
     proposito =val.vDatos("Utilidad del vehiculo: ")
     nuevoVehiculo = Vehiculo ("", numSerie, matricula, marca, modelo, fecha_adquision,1,  tipo_licencia, proposito)
     crudVehiculo.agregarVehiculo(nuevoVehiculo)

@@ -11,7 +11,7 @@ Columnas tabla mantenimiento:
     importancia VARCHAR(50) NOT NULL,
     fechaProgramada DATE NOT NULL,
     comentarios VARCHAR(300),
-    tipoMantenimiento INT NOT NULL,
+    tipo_Mantenimiento INT NOT NULL,
     vehiculo VARCHAR(17) NOT NULL,
     estadoMantenimiento INT NOT NULL,
 '''
@@ -21,12 +21,11 @@ def alta(objMantenimiento):
     miConn = conn()
     comando = """
         INSERT INTO mantenimiento 
-        (razon, estatus, importancia, fechaProgramada, comentarios, tipoMantenimiento, vehiculo, estadoMantenimiento)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        (razon, importancia, fechaProgramada, comentarios, tipoMantenimiento, vehiculo, estadoMantenimiento)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
     valores = (
         objMantenimiento.get_razon(),
-        objMantenimiento.get_estatus(),
         objMantenimiento.get_importancia(),
         objMantenimiento.get_fechaProgramada(),
         objMantenimiento.get_comentarios(),
@@ -49,13 +48,12 @@ def lista():
     miConn = Conn()
     
     try:
-        comando = "SELECT folio, razon, fechaProgramada, comentarios, TipoMantenimiento, vehiculo, EstadoMantenimiento FROM MANTENIMIENTO"
+        comando = "SELECT folio, razon, importancia, fechaProgramada, comentarios, tipoMantenimiento, vehiculo, estadoMantenimiento FROM MANTENIMIENTO"
         listado = miConn.lista(comando)
         lista = []
         for fila in listado:
             m = Mantenimiento(
                 fila[1],  # Razon
-                0,  # Estatus
                 0,  # Importancia
                 str(fila[2]),  # FechaProgramada
                 fila[3],  # Comentarios
@@ -77,7 +75,6 @@ def actualizar(objMantenimiento):
     miConn = conn()
     comando = """
         UPDATE mantenimiento SET
-        Estatus=%s,
         Importancia=%s,
         FechaProgramada=%s,
         Comentarios=%s,
@@ -86,7 +83,6 @@ def actualizar(objMantenimiento):
         WHERE Folio=%s
     """
     valores = (
-        objMantenimiento.get_estatus(),
         objMantenimiento.get_importancia(),
         objMantenimiento.get_fechaProgramada(),
         objMantenimiento.get_comentarios(),
@@ -100,10 +96,13 @@ def actualizar(objMantenimiento):
         miConn.conexion.commit()
         if cursor.rowcount == 1:
             print("Actualización de mantenimiento realizada.")
+            input("Presione Enter para continuar...")
         else:
             print("Actualización no realizada o folio no encontrado.")
+            input("Presione Enter para continuar...")
     except Exception as e:
         print("Error en conexión o actualización:")
+        input("Presione Enter para continuar...")
         print(e)
 
 
@@ -118,17 +117,20 @@ def borrar(objMantenimiento):
         miConn.conexion.commit()
         if cursor.rowcount == 1:
             print("Mantenimiento eliminado correctamente.")
+            input("Presione Enter para continuar...")
         else:
             print("El folio del mantenimiento no existe.")
+            input("Presione Enter para continuar...")
     except Exception as e:
         print("Error al eliminar mantenimiento:")
+        input("Presione Enter para continuar...")
         print(e)
 
 
 # ----- BUSCAR POR FOLIO -----
 def buscar(objMantenimiento):
     miConn = conn()
-    comando = "SELECT Folio, Razon, Estatus, Importancia, FechaProgramada, Comentarios, TipoMantenimiento, Vehiculo, EstadoMantenimiento FROM mantenimiento WHERE Folio=%s"
+    comando = "SELECT Folio, Razon, Importancia, FechaProgramada, Comentarios, tipoMantenimiento, Vehiculo, estadoMantenimiento FROM mantenimiento WHERE Folio=%s"
     valores = (objMantenimiento.get_folio(),)
     try:
         cursor = miConn.conexion.cursor()
@@ -143,7 +145,6 @@ def buscar(objMantenimiento):
                 fila[5],
                 fila[6],
                 fila[7],
-                fila[8],
                 fila[0]
             )
             return m
