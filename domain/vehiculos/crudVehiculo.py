@@ -197,12 +197,12 @@ def tipli():
         input("\n   Presione ENTER para continuar...")
         return
 
-    print(f"{'Codigo':<10} {'Descripcion':<30}")
+    print(f"{'NUM':<10} {'Codigo':<10} {'Descripcion':<30}")
     print("-"*45)
     input("\n   Presione ENTER para continuar...")
 
     for numero, codigo, descripcion in lista:
-        print(f"{codigo:<10} {descripcion:<30}")
+        print(f"{numero:<10} {codigo:<10} {descripcion:<30}")
 
     print("-"*45)
     

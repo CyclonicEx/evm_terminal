@@ -53,11 +53,12 @@ def vFecha():
 
 def vTipoLicencia(tipo_licencia):
     while True:
-        valor=input(tipo_licencia)
-        if len(valor) <1 or len(valor) >2:
-            print("El tipo de licencia solo requiere de 1 o 2 caracteres")
+        aux = input(tipo_licencia)
+
+        if aux.isdigit():
+            return int(aux)
         else:
-            return valor
+            print("Solo numeros enteros.")
 
 def vCapacidad(capacidad_pasajeros):
     while True:
